@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+
+<html lang='en' class='bg-color'>
+    <head>
+        <title>GetDistracted</title>
+        <meta charset='UTF-8'>
+        <link href="https://fonts.googleapis.com/css?family=Quicksand:300" rel="stylesheet">
+<!--                <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">-->
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+      
+        <script type='text/javascript' src='jquery.min.js'></script>
+<!--        <script src='node_modules/moment/min/moment.min.js'></script>   -->
+        <script src='main.js'></script>
+
+    </head>
+    
+    <body>
+        <nav class="bg-color">Get Distracted</nav>
+
+        <section class="wrapper">
+            <ul class="tabs">
+                <li class="active mainTab">Current Session</li>
+                <li>Focus with Math!</li>
+<!--                <li>Timed Session</li>-->
+            </ul>
+            
+            <ul class="tab_content">
+                <li class="active">
+                    <div class="content_wrapper" style='overflow:scroll;'>
+                        <h2 class="text-color">Pick a color</h2>
+<!--
+                        <ul class="colors">
+                            <li data-color="#2ecc71"></li>
+                            <li data-color="#D64A4B"></li>
+                            <li data-color="#8e44ad"></li>
+                            <li class="active-color" data-color="#46a1de"></li>
+                            <li data-color="#bdc3c7"></li>
+                        </ul>
+-->
+                        
+                        <button class='testBtn'>click</button>
+                        <ul class='websitesList'>
+<!--                           <li>test</li>-->
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <form class='mainInputForm'>
+                        <div id='MathContent' class='content_wrapper'>
+                            <h1>Website to block</h1>
+                            <div class='siteInput'>
+                                <input class='siteToBlock' placeholder="e.g. www.youtube.com" type='text'>
+                            </div>
+
+                            <h1>Question Difficulty</h1>
+                            <!--  RANGE SLIDER  -->
+                            <div class="range_slider">
+                                <input class="range_slider_range" type="range" value="200" min="100" max="300" step="100">
+                                <ul class="range_labels" style="display:flex;justify-content:space-between; margin-left:auto;margin-right:auto;">
+                                    <li id='basic'>Basic</li>
+                                    <li id='intermediate' class='activeOption'>Intermediate</li>
+                                    <li id='advanced'>Advanced</li>
+                                </ul>
+                            </div>
+
+                            <div class='timer'>
+    <!--                            <input type="text" id="time" data-format="HH:mm" data-template="HH : mm" name="datetime">-->
+                                <span class='timer'>
+                                    <h1>Backup Timer</h1>
+                                    <select class='hour form-control' required>
+                                        <option value='Hour'>Hour</option>
+                                        <option value='0'>00</option>
+                                        <option value='1'>01</option>
+                                        <option value='2'>02</option>
+                                        <option value='3'>03</option>
+                                        <option value='4'>04</option>
+                                        <option value='5'>05</option>
+                                        <option value='6'>06</option>
+                                        <option value='7'>07</option>
+                                        <option value='8'>08</option>
+                                        <option value='9'>09</option>
+                                        <option value='10'>10</option>
+                                        <option value='11'>11</option>
+                                        <option value='12'>12</option>
+                                        <option value='-1'>Until Problem Solved</option>
+                                    </select>
+                                    <select class='minute form-control' required>
+                                        <option value='Minute'>Minute</option>
+                                        <option value='0'>00</option>
+                                        <option value='5'>05</option>
+                                        <option value='10'>10</option>
+                                        <option value='15'>15</option>
+                                        <option value='20'>20</option>
+                                        <option value='25'>25</option>
+                                        <option value='30'>30</option>
+                                        <option value='35'>35</option>
+                                        <option value='40'>40</option>
+                                        <option value='45'>45</option>
+                                        <option value='50'>50</option>
+                                        <option value='55'>55</option>
+                                        <option value='-2'>Until Problem Solved</option>
+                                    </select>
+                                </span>
+                            </div>
+                            
+                            <button class='focusBtn' type="button"><span>FOCUS! </span></button>
+                            
+                            <div class='missingBlankPrompt hide'>
+                                <span></span>
+                            </div>
+                            
+                        </div>    
+                    </form>
+                </li>
+                
+            </ul>
+        </section>
+
+    </body>
+</html>
+
+
+
+<!-- Cool ideas for timers: https://freefrontend.com/css-clocks/ -->
