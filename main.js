@@ -193,82 +193,109 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         var timerLength = (hour * 3600) + (minute * 60);  // timerLength in seconds
         var expirationDate;
         
-        if (hour == '-1' || minute == '-2') {
-            // 'Until Problem Solved' option selected, set expirationDate to 12 months from now
-            alert('selected');
-            expirationDate = currentTime + 31540000;
-        } else {
+//         if (hour == '-1' || minute == '-2') {
+//             // 'Until Problem Solved' option selected, set expirationDate to 12 months from now
+// //            alert('selected');
+//             expirationDate = currentTime + 31540000;
+//         } else {
             // otherwise, set expirationDate to length of timer
-            alert('else case');
-            expirationDate = currentTime + timerLength;
-            alert(currentTime);
-            alert(timerLength); 
-            alert(expirationDate); 
-        }
+//            alert('else case');
+            expirationDate = currentTime + timerLength;   // set expirationDate to length of timer
+//            alert(currentTime);
+//            alert(timerLength); 
+//            alert(expirationDate); 
+        // }
         chrome.cookies.set({ url: "http://example.com/", name: website_str, value: cookie_str, expirationDate: expirationDate});     // expirationDate starts from UNIX epoch time
         
+        location.reload();  // refreshes the page
     });
     
     
+
     
     
-    $('.testBtn').on('click', function() {
-        $('ul.websitesList').append('<li>Test Element</li>');
-    });
-    
-    
-    // load blocked websites from cookies on page load
-    chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
-        // on each load, calculation of time left must be performed
-        var currentTime = new Date().getTime() / 1000;
-        for (var i = 0; i < cookies.length; i++) {
-            alert('cookies retrieved');
-            $('ul.websitesList').append('<li>Test Element</li>');
-        }
-    });
-    
-    
-    
-    function createTimer(difference) {
+    var timers = [];  // array to keep track of timers, since setInterval() runs on a different thread and persists after caller function is finished
+    function createTimer(difference, i) {
         var hour;
         var minute;
         var second;
-//        var remainder;
-        setInterval(function() {
+        function setTime() {
             if (--difference) {
                 hour = Math.floor(difference / 3600);
                 minute = Math.floor((difference % 3600) / 60);
                 second = Math.floor(difference % 60);
-                $('.timerHour').text(hour);
-                $('.timerMin').text(minute);
-                $('.timerSec').text(second);
+                $('#timerHour' + i).text(hour);
+                $('#timerMin' + i).text(minute);
+                $('#timerSec' + i).text(second);
             }
-        }, 1000);
+        }
+        setTime();
+        timers[i] = setInterval(setTime, 1000);
     }
     
-    // 1hr 53min 23s = 6803s
-//    7446.044000148773
-//    2 hr 14762 min 362 sec 
-    // monitor if user has navigated onto mainTab, then load cookies 
-    clickedTab.click(function() {
-        if ($(clickedTab.hasClass('.mainTab'))) {
-            $('ul.websitesList').empty();  // clear list of websites before rendering cookies
-            chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookieStr = JSON.stringify(cookies[i]);
-                    var obj = JSON.parse(cookieStr);
-                    var expirationDate = obj.expirationDate;
-                    var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
-                    var website = obj.name.substring(-1, obj.name.length - 1).substr(1);
-                    var timer = createTimer(difference);
-                    alert("difference: " + difference);
-                    $('ul.websitesList').append("<li><h2><b class='websiteURL'>" + website + "</b><div class='siteListTimer'><b>Time Left:" + "\xa0\xa0\xa0" + "</b><b class='timerHour'></b> hr \xa0" + "<b class='timerMin'></b> min \xa0" + "<b class='timerSec'></b> sec" + "</div></h2></li>");
-                }
-            });
-        } 
+    
+    // load blocked websites from cookies on page load
+    chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
+        for (var i = 0; i < cookies.length; i++) {
+            var cookieStr = JSON.stringify(cookies[i]);
+            var obj = JSON.parse(cookieStr);
+            var expirationDate = obj.expirationDate;
+            var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
+            var website = obj.name.substring(0, obj.name.length - 1).substr(1);
+//                alert(difference);
+            $('ul.websitesList').append("<li class='liElmt'><h2><b class='websiteURL'>" + website + "</b><br><div class='siteListTimer'><b>Time Left:" + "\xa0\xa0\xa0" + "</b><b id='timerHour" + i + "'></b> hr \xa0" + "<b id='timerMin" + i + "'></b> min \xa0" + "<b id='timerSec" + i + "'></b> sec" + "</div></h2></li>");
+            createTimer(difference, i);
+        }
+        
+//        alert('onLoad loading cookies called');
     });
     
+    
+    $('.inputTab').on('click', function() {
+        chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
+            for (var i = 0; i < cookies.length; i++) {
+//                alert('second tab clicked');
+                window.clearInterval(timers[i]);
+            }
+        });
+    });
+    
+    
+    // monitor if user has navigated onto mainTab, then load cookies 
+    $('.mainTab').on('click', function() {
+//        alert('first tab clicked')
+        $('ul.websitesList').empty();  // clear list of websites before rendering cookies
+//            window.clearInterval(timers[i]);
+        chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
+            for (var i = 0; i < cookies.length; i++) {
+                clearInterval(timers[i]);  // clear timer before creating new one again
+                
+                var cookieStr = JSON.stringify(cookies[i]);
+                var obj = JSON.parse(cookieStr);
+                var expirationDate = obj.expirationDate;
+                var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
+                var website = obj.name.substring(0, obj.name.length - 1).substr(1);
+//                    alert(cookies.length);
+                $('ul.websitesList').append("<li class='liElmt'><h2><b class='websiteURL'>" + website + "</b><br><div class='siteListTimer'><b>Time Left:" + "\xa0\xa0\xa0" + "</b><b id='timerHour" + i + "'></b> hr \xa0" + "<b id='timerMin" + i + "'></b> min \xa0" + "<b id='timerSec" + i + "'></b> sec" + "</div></h2></li>");
+                createTimer(difference, i); 
+            }
+        });
+
+    });
+    
+    // monitor if blocked website list elmt has been clicked
+    // if clicked, redirect to blocked site page w/ timer
+    $('.websitesList').on('click', 'li.liElmt', function() {
+        // alert('blocked site CLICKED');
+        window.open('blockedSite.html', '_blank');
+    });
+
     // IMPLEMENT url mandatory input or smth and auto fill 'http'
+    // enter url, when hit enter, the missingPrompt still retains...
+    // long website names pushing the timer indicator out of the list element box
+    
+    // the most recent added cookie's time is displayed across all li elements
+    // b/c using the same class to insert, fix css or classing
 });
 
 
@@ -295,3 +322,35 @@ function getCookie(name) {
     }
     return null;
 }
+
+
+
+
+
+
+
+
+
+
+    
+    // monitor if user has navigated onto mainTab, then load cookies 
+//    clickedTab.click(function() {
+//        if ($(clickedTab.hasClass('.mainTab'))) {
+//            alert('first tab clicked')
+//            $('ul.websitesList').empty();  // clear list of websites before rendering cookies
+////            window.clearInterval(timers[i]);
+//            chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
+//                for (var i = 0; i < cookies.length; i++) {
+//                    var cookieStr = JSON.stringify(cookies[i]);
+//                    var obj = JSON.parse(cookieStr);
+//                    var expirationDate = obj.expirationDate;
+//                    var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
+//                    var website = obj.name.substring(0, obj.name.length - 1).substr(1);
+////                    alert(cookies.length);
+//                    $('ul.websitesList').append("<li><h2><b class='websiteURL'>" + website + "</b><br /><div class='siteListTimer'><b>Time Left:" + "\xa0\xa0\xa0" + "</b><b id='timerHour" + i + "'></b> hr \xa0" + "<b id='timerMin" + i + "'></b> min \xa0" + "<b id='timerSec" + i + "'></b> sec" + "</div></h2></li>");
+////                    createTimer(difference, i); 
+//                }
+//            });
+//        }
+//    });
+    

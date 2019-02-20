@@ -9,10 +9,6 @@
     "default_title": "GetDistracted",
     "default_popup": "popup.html"
  },
-"background": {
-    "scripts": ["background.js"],
-    "persistent": false
-},
  "permissions": [
     "activeTab",
     "storage",

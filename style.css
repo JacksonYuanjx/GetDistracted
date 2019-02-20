@@ -48,7 +48,7 @@ footer {
   min-width: 450px;
   max-width: 600px;
   min-height: 200px;
-  max-height: 600px;
+  max-height: 500px;
   margin-bottom: 5px;
   padding: 60px 10px 10px 10px;
 }
@@ -445,7 +445,7 @@ input::-moz-focus-outer {
     font-size: 9px;
     border-radius: 12.5px;
     background-color: #e6eef2;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 4px 4px rgba(0,0,0,0.23);
+    box-shadow: 0 10px 10px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.23);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
@@ -454,19 +454,18 @@ input::-moz-focus-outer {
 }
 
 .websiteURL {
-    float: left;
+/*    float: left;*/
     vertical-align: top;
-    padding-top: 6px;
-    padding-left: 15px;
+    padding: 12px 12.5px 7.5px 12px;
 /*    USE DIFFERENT FONT HERE*/
+/*    transition: 1s;*/
 }
 
 .siteListTimer {
-    float: right;
+/*    float: right;*/
     font-size: 12px;
-    vertical-align: text-bottom;;
-    padding-top: 28.5px;
-    padding-right: 12.5px;
+    vertical-align: bottom;
+    padding: 12px 12.5px 7.5px 12px;
 }
 
 
