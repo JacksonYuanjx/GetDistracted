@@ -207,14 +207,11 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         // }
         chrome.cookies.set({ url: "http://example.com/", name: website_str, value: cookie_str, expirationDate: expirationDate});     // expirationDate starts from UNIX epoch time
         // NOTE: investigate expiration date setting of this function; why not use setCookie() defined at bottom?
-
         location.reload();  // refreshes the page
     });
     
     
 
-    
-    
     var timers = [];  // array to keep track of timers, since setInterval() runs on a different thread and persists after caller function is finished
     function createTimer(difference, i) {
         var hour;
