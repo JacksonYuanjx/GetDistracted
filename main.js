@@ -227,7 +227,7 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                 $('#timerSec' + i).text(second);
             }
         }
-        setTime();
+        setTime();  // call once first to prevent initial delay in displaying time
         timers[i] = setInterval(setTime, 1000);
     }
     

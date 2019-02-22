@@ -5,12 +5,11 @@ $(document).ready(function() {
     // alert(urlParamWebsite_JSONStr);
     $('.title').text(urlParamWebsite);
     chrome.cookies.get({"url": "http://example.com/", "name": urlParamWebsite_JSONStr}, function(cookie) {   
-        alert(cookie.value);
+        // alert(cookie.value);
         var cookieStr = JSON.stringify(cookie);
         var obj = JSON.parse(cookieStr);
         var expirationDate = obj.expirationDate;
         var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
-
 
         $('ul.websitesList').append("<li class='liElmt'><h2><b class='websiteURL'>"
                                  + urlParamWebsite + "</b><br><div class='siteListTimer'><b>Time Left:" 
@@ -21,26 +20,6 @@ $(document).ready(function() {
     });
     // INVESTIGATE: cookie is not being set correctly? the name has quotations included??
 
-
-
-    var timers = [];  // array to keep track of timers, since setInterval() runs on a different thread and persists after caller function is finished
-    function createTimer(difference) {
-        var hour;
-        var minute;
-        var second;
-        function setTime() {
-            if (--difference) {
-                hour = Math.floor(difference / 3600);
-                minute = Math.floor((difference % 3600) / 60);
-                second = Math.floor(difference % 60);
-                $('#timerHour').text(hour);
-                $('#timerMin').text(minute);
-                $('#timerSec').text(second);
-            }
-        }
-        setTime();
-        setInterval(setTime, 1000);
-    }
 
 
     // COUNTDOWN ANIMATION/DESIGN FROM: https://codepen.io/doriancami/pen/jEJvaV
@@ -57,9 +36,11 @@ $(document).ready(function() {
         // Initialize the countdown  
         init: function(difference) {
 
+            // (added)
             var hour = Math.floor(difference / 3600);
             var minute = Math.floor((difference % 3600) / 60);
             var second = Math.floor(difference % 60);   
+
         // DOM
         this.$ = {
             hours  : this.$el.find('.bloc-time.hours .figure'),
@@ -79,7 +60,7 @@ $(document).ready(function() {
         
         // Initialize total seconds
         // this.total_seconds = this.values.hours * 60 * 60 + (this.values.minutes * 60) + this.values.seconds;
-        this.total_seconds = difference + 2;   // ~ 2 seconds off, so add 3 sec
+        this.total_seconds = difference;  
 
         // Animate countdown to the end 
         this.count();    
@@ -87,48 +68,6 @@ $(document).ready(function() {
         
         count: function() {
         
-            // var hour = Math.floor(difference / 3600);
-            // var minute = Math.floor((difference % 3600) / 60);
-            // var second = Math.floor(difference % 60);    
-            // var hour_1 = 0, 
-            //     hour_2 = 0, 
-            //     min_1 = 0, 
-            //     min_2 = 0, 
-            //     sec_1 = 0, 
-            //     sec_2 = 0,
-            //     temp = 0;
-
-            // if (hour < 10) {
-            //     hour_2 = hour;
-            // } else {
-            //     hour_1 = 1;  // b/c extension only allows max 12 hrs so max of first digit is '1'
-            //     hour_2 = hour - 10;
-            // }
-
-            // if (minute < 10) {
-            //     min_2 = minute;
-            // } else {
-            //     temp = minute;
-            //     while (temp >= 10) {
-            //         temp /= 10;
-            //     }  // on loop completion: temp holds the first digit
-            //     min_1 = temp;
-            //     min_2 = minute % 10;  // returns last digit of 'minute'
-            // }
-
-            // if (second < 10) {
-            //     sec_2 = second;
-            // } else {
-            //     temp = second;
-            //     while (temp >= 10) {
-            //         temp /= 10;
-            //     }  // on loop completion: temp holds first digit
-            //     sec_1 = temp;
-            //     sec_2 = second % 10;
-            // }
-            // alert(hour_1);
-            // alert(hour_2);
-
         var that    = this,
             $hour_1 = this.$.hours.eq(0),
             $hour_2 = this.$.hours.eq(1),
@@ -137,7 +76,7 @@ $(document).ready(function() {
             $sec_1  = this.$.seconds.eq(0),
             $sec_2  = this.$.seconds.eq(1);
         
-            this.countdown_interval = setInterval(function() {
+            function setTime () {
     
             if(that.total_seconds > 0) {
     
@@ -170,7 +109,9 @@ $(document).ready(function() {
             else {
                 clearInterval(that.countdown_interval);
             }
-        }, 1000);    
+        }
+        setTime();  // call once first to prevent initial delay in displaying time
+        this.countdown_interval = setInterval(setTime, 1000);   
         },
         
         animateFigure: function($el, value) {
@@ -232,9 +173,7 @@ $(document).ready(function() {
         }
     };
     
-    // Let's go !
     // Countdown.init();
-
 
 });
 
