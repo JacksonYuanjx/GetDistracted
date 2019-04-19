@@ -279,5 +279,6 @@ h2 strong {
   left: 0;
   right: 0;
   text-align: center;
+  word-wrap: break-word;  /* ensures that text does not run off page and ruin layout */
   margin: 100px auto;
 }

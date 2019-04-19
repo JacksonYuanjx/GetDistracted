@@ -2,7 +2,8 @@ $(document).ready(function() {
 
     var urlParamWebsite = getUrlVars()['website'];
     var urlParamWebsite_JSONStr = JSON.stringify(urlParamWebsite);
-    // alert(urlParamWebsite_JSONStr);
+    var answer;
+
     $('.websiteName').text(urlParamWebsite);
     chrome.cookies.get({"url": "http://example.com/", "name": urlParamWebsite_JSONStr}, function(cookie) {   
         alert(cookie.value);
@@ -17,14 +18,13 @@ $(document).ready(function() {
         //                          + "\xa0\xa0\xa0" + "</b><b id='timerHour'></b> hr \xa0" 
         //                          + "<b id='timerMin'></b> min \xa0" + "<b id='timerSec'></b> sec" + "</div></h2></li>");
         Countdown.init(difference);
-        var answer = loadQuestion(difficulty);
-        // createTimer(difference);
+        loadQuestion(difficulty);
+
     });
     // INVESTIGATE: cookie is not being set correctly? the name has quotations included??
 
     // helper function that loads question onto screen and returns the answer to that question
     function loadQuestion(difficulty) {
-        var answer;
 
         $.getJSON('questions.json', function(data) {
             var dataObj = JSON.parse(JSON.stringify(data));
@@ -36,7 +36,7 @@ $(document).ready(function() {
                 answer = dataObj.questions_basic[idx].answer;
             } else if (difficulty == "Intermediate") {
                 question = dataObj.questions_intermediate[1].question;
-                answer = dataObj.questions_intermediate[idx].answer;
+                answer = dataObj.questions_intermediate[1].answer;
             } else {
                 question = dataObj.questions_advanced[idx].question;
                 answer = dataObj.questions_advanced[idx].answer;
@@ -45,16 +45,32 @@ $(document).ready(function() {
             alert(answer);
             $('.question').append(question);
         })
-
-        return answer;
     }
 
+    // helper function that returns random int between min and max, inclusive
     function getRandomIntInclusive(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
     }
     
+    // function that checks if answer is correct on click event of submit button
+    $('.submitBtn').on('click', function() {
+        var inputAnswer = $('.answer').val();
+
+        // check if there is an input answer, if not, then return
+        if (inputAnswer == "") {
+            return;
+        }
+
+        alert(answer);
+        if (inputAnswer == answer) {
+            alert("correct answer!");
+        } else {
+            alert("errrr INCORRECT answer");
+        }
+    })
+
 
 
 
