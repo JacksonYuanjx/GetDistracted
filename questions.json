@@ -1,78 +1,203 @@
 {
-    "questions": [
+    "questions_basic": [
         {
             "id": 0,
-            "difficulty": 1,
             "question": "QUESTION 0",
             "answer": "ANSWER 0"
         },   
 
         {
             "id": 1,
-            "difficulty": 1,
             "question": "QUESTION 1",
             "answer": "ANSWER 1"
         },
 
         {
             "id": 2,
-            "difficulty": 1,
             "question": "QUESTION 2",
             "answer": "ANSWER 2"
         },
 
         {
             "id": 3,
-            "difficulty": 1,
             "question": "QUESTION 3",
             "answer": "ANSWER 3"
         },
 
         {
             "id": 4,
-            "difficulty": 1,
             "question": "QUESTION 4",
             "answer": "ANSWER 4"
         },
 
         {
             "id": 5,
-            "difficulty": 1,
             "question": "QUESTION 5",
             "answer": "ANSWER 5"
         },   
 
         {
             "id": 6,
-            "difficulty": 1,
             "question": "QUESTION 6",
             "answer": "ANSWER 6"
         },
 
         {
             "id": 7,
-            "difficulty": 1,
             "question": "QUESTION 7",
             "answer": "ANSWER 7"
         },
 
         {
             "id": 8,
-            "difficulty": 1,
             "question": "QUESTION 8",
             "answer": "ANSWER 8"
         },
 
         {
             "id": 9,
-            "difficulty": 1,
             "question": "QUESTION 9",
             "answer": "ANSWER 9"
         },
 
-         {
+        {
             "id": 10,
-            "difficulty": 1,
+            "question": "QUESTION 10",
+            "answer": "ANSWER 10"
+        }
+    ],
+
+    "questions_intermediate": [
+        {
+            "id": 0,
+            "question": "QUESTION 0",
+            "answer": "ANSWER 0"
+        },   
+
+        {
+            "id": 1,
+            "question": "QUESTION 1 fasdkjflaksdjfljasldkfjalskdjflksajdflkasjldfjasldfjlasdjflkasdjflksjdfoirowieoaowjflaskdjflskdvlsldjfpaosndfoweof owjfoaisdjf;aslkdfl;asjdlfjsaldkfjasldkfjowiejflakd",
+            "answer": "ANSWER 1"
+        },
+
+        {
+            "id": 2,
+            "question": "QUESTION 2",
+            "answer": "ANSWER 2"
+        },
+
+        {
+            "id": 3,
+            "question": "QUESTION 3",
+            "answer": "ANSWER 3"
+        },
+
+        {
+            "id": 4,
+            "question": "QUESTION 4",
+            "answer": "ANSWER 4"
+        },
+
+        {
+            "id": 5,
+            "question": "QUESTION 5",
+            "answer": "ANSWER 5"
+        },   
+
+        {
+            "id": 6,
+            "question": "QUESTION 6",
+            "answer": "ANSWER 6"
+        },
+
+        {
+            "id": 7,
+            "question": "QUESTION 7",
+            "answer": "ANSWER 7"
+        },
+
+        {
+            "id": 8,
+            "question": "QUESTION 8",
+            "answer": "ANSWER 8"
+        },
+
+        {
+            "id": 9,
+            "question": "QUESTION 9",
+            "answer": "ANSWER 9"
+        },
+
+        {
+            "id": 10,
+            "question": "QUESTION 10",
+            "answer": "ANSWER 10"
+        }
+    ],
+
+    "questions_advanced": [
+        {
+            "id": 0,
+            "question": "QUESTION 0",
+            "answer": "ANSWER 0"
+        },   
+
+        {
+            "id": 1,
+            "question": "QUESTION 1",
+            "answer": "ANSWER 1"
+        },
+
+        {
+            "id": 2,
+            "question": "QUESTION 2",
+            "answer": "ANSWER 2"
+        },
+
+        {
+            "id": 3,
+            "question": "QUESTION 3",
+            "answer": "ANSWER 3"
+        },
+
+        {
+            "id": 4,
+            "question": "QUESTION 4",
+            "answer": "ANSWER 4"
+        },
+
+        {
+            "id": 5,
+            "question": "QUESTION 5",
+            "answer": "ANSWER 5"
+        },   
+
+        {
+            "id": 6,
+            "question": "QUESTION 6",
+            "answer": "ANSWER 6"
+        },
+
+        {
+            "id": 7,
+            "question": "QUESTION 7",
+            "answer": "ANSWER 7"
+        },
+
+        {
+            "id": 8,
+            "question": "QUESTION 8",
+            "answer": "ANSWER 8"
+        },
+
+        {
+            "id": 9,
+            "question": "QUESTION 9",
+            "answer": "ANSWER 9"
+        },
+
+        {
+            "id": 10,
             "question": "QUESTION 10",
             "answer": "ANSWER 10"
         }

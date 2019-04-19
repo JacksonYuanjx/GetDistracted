@@ -3,22 +3,58 @@ $(document).ready(function() {
     var urlParamWebsite = getUrlVars()['website'];
     var urlParamWebsite_JSONStr = JSON.stringify(urlParamWebsite);
     // alert(urlParamWebsite_JSONStr);
-    $('.title').text(urlParamWebsite);
+    $('.websiteName').text(urlParamWebsite);
     chrome.cookies.get({"url": "http://example.com/", "name": urlParamWebsite_JSONStr}, function(cookie) {   
-        // alert(cookie.value);
+        alert(cookie.value);
         var cookieStr = JSON.stringify(cookie);
         var obj = JSON.parse(cookieStr);
         var expirationDate = obj.expirationDate;
+        var difficulty = JSON.parse(obj.value).difficulty;
         var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
 
-        $('ul.websitesList').append("<li class='liElmt'><h2><b class='websiteURL'>"
-                                 + urlParamWebsite + "</b><br><div class='siteListTimer'><b>Time Left:" 
-                                 + "\xa0\xa0\xa0" + "</b><b id='timerHour'></b> hr \xa0" 
-                                 + "<b id='timerMin'></b> min \xa0" + "<b id='timerSec'></b> sec" + "</div></h2></li>");
+        // $('ul.websitesList').append("<li class='liElmt'><h2><b class='websiteURL'>"
+        //                          + urlParamWebsite + "</b><br><div class='siteListTimer'><b>Time Left:" 
+        //                          + "\xa0\xa0\xa0" + "</b><b id='timerHour'></b> hr \xa0" 
+        //                          + "<b id='timerMin'></b> min \xa0" + "<b id='timerSec'></b> sec" + "</div></h2></li>");
         Countdown.init(difference);
-        createTimer(difference);
+        var answer = loadQuestion(difficulty);
+        // createTimer(difference);
     });
     // INVESTIGATE: cookie is not being set correctly? the name has quotations included??
+
+    // helper function that loads question onto screen and returns the answer to that question
+    function loadQuestion(difficulty) {
+        var answer;
+
+        $.getJSON('questions.json', function(data) {
+            var dataObj = JSON.parse(JSON.stringify(data));
+            var question;
+            var idx = getRandomIntInclusive(0, dataObj.questions_basic.length - 1);
+            // maintain invariant in questions.json that each difficult set has same # of questions
+            if (difficulty == "Basic") {
+                question = dataObj.questions_basic[idx].question;
+                answer = dataObj.questions_basic[idx].answer;
+            } else if (difficulty == "Intermediate") {
+                question = dataObj.questions_intermediate[1].question;
+                answer = dataObj.questions_intermediate[idx].answer;
+            } else {
+                question = dataObj.questions_advanced[idx].question;
+                answer = dataObj.questions_advanced[idx].answer;
+            }
+            alert(question);
+            alert(answer);
+            $('.question').append(question);
+        })
+
+        return answer;
+    }
+
+    function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+    }
+    
 
 
 
