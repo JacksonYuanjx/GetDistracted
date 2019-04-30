@@ -285,15 +285,15 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
     // if clicked, redirect to blocked site page w/ timer
     $('.websitesList').on('click', 'li.liElmt', function() {
         var website = $(this).find('.websiteURL').text();
-        // alert(website);
         $.post('blockedSite.html', website, function(data) {
                 // alert(data);
-                var tab = window.open('blockedSite.html', '_blank');
+                // var tab = window.open('blockedSite.html', '_blank');
+                var tab = window.open('blockedSite.html?website=' + website, '_blank');
                 // $(tab).find('h2').append(data);
                 // $(tab).find('.title').append(website);
-            });
+        });
             // URL params: https://stackoverflow.com/questions/5998425/url-format-with-get-parameters
-            var tab = window.open('blockedSite.html?website=' + website, '_blank');
+            // var tab = window.open('blockedSite.html?website=' + website, '_blank');
     });
 
 

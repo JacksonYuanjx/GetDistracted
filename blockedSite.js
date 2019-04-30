@@ -6,7 +6,7 @@ $(document).ready(function() {
 
     $('.websiteName').text(urlParamWebsite);
     chrome.cookies.get({"url": "http://example.com/", "name": urlParamWebsite_JSONStr}, function(cookie) {   
-        alert(cookie.value);
+        // alert(cookie.value);
         var cookieStr = JSON.stringify(cookie);
         var obj = JSON.parse(cookieStr);
         var expirationDate = obj.expirationDate;
@@ -41,8 +41,8 @@ $(document).ready(function() {
                 question = dataObj.questions_advanced[idx].question;
                 answer = dataObj.questions_advanced[idx].answer;
             }
-            alert(question);
-            alert(answer);
+            // alert(question);
+            // alert(answer);
             $('.question').append(question);
         })
     }
@@ -63,11 +63,15 @@ $(document).ready(function() {
             return;
         }
 
-        alert(answer);
+        // alert(answer);
         if (inputAnswer == answer) {
             alert("correct answer!");
+            // unblock website (remove from list, delete cookie?)
+            // redirect page to the website
         } else {
             alert("errrr INCORRECT answer");
+            // include popup msg below the input that temporarily says "incorrect" or smth then fades away 
+            // (similar to focus btn msg on incomplete inputs)
         }
     })
 
