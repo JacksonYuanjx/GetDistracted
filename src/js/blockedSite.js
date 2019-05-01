@@ -7,7 +7,6 @@ $(document).ready(function() {
     $('.websiteName').text(urlParamWebsite);
     chrome.cookies.get({"url": "http://example.com/", "name": urlParamWebsite_JSONStr}, function(cookie) {   
         // alert(cookie.value);
-
         var cookieStr = JSON.stringify(cookie);
         var obj = JSON.parse(cookieStr);
 
@@ -19,7 +18,7 @@ $(document).ready(function() {
             Countdown.init(difference);
             loadQuestion(difficulty);
         } else {
-            alert(urlParamWebsite);
+            // alert(urlParamWebsite);
             window.location = urlParamWebsite;
         } 
     });
@@ -27,7 +26,6 @@ $(document).ready(function() {
 
     // helper function that loads question onto screen and returns the answer to that question
     function loadQuestion(difficulty) {
-
         $.getJSON('src/questions.json', function(data) {  // for file location, use location relative to position of blockedSite.html
             var dataObj = JSON.parse(JSON.stringify(data));
             var question;
@@ -46,7 +44,7 @@ $(document).ready(function() {
             // alert(question);
             // alert(answer);
             $('.question').append(question);
-        })
+        });
     }
 
     // helper function that returns random int between min and max, inclusive
@@ -80,7 +78,7 @@ $(document).ready(function() {
             // window.location.assign("https://www.youtube.com/");
             location.reload();
         } else {
-            alert("errrr INCORRECT answer");
+            alert("INCORRECT answer, please try again!");
             // window.location = "https://www.youtube.com/";
             // include popup msg below the input that temporarily says "incorrect" or smth then fades away 
             // (similar to focus btn msg on incomplete inputs)
@@ -91,7 +89,7 @@ $(document).ready(function() {
 
 
     // COUNTDOWN ANIMATION/DESIGN FROM: https://codepen.io/doriancami/pen/jEJvaV
-        // Create Countdown
+    // Create Countdown
     var Countdown = {
     
         // Backbone-like structure
@@ -146,38 +144,42 @@ $(document).ready(function() {
         
             function setTime () {
     
-            if(that.total_seconds > 0) {
-    
-                --that.values.seconds;              
-    
-                if(that.values.minutes >= 0 && that.values.seconds < 0) {
-    
-                    that.values.seconds = 59;
-                    --that.values.minutes;
+                if (that.total_seconds > 0) {
+        
+                    --that.values.seconds;              
+        
+                    if(that.values.minutes >= 0 && that.values.seconds < 0) {
+        
+                        that.values.seconds = 59;
+                        --that.values.minutes;
+                    }
+        
+                    if(that.values.hours >= 0 && that.values.minutes < 0) {
+        
+                        that.values.minutes = 59;
+                        --that.values.hours;
+                    }
+                    
+                    // if timer has reached the end, redirect to the blocked site
+                    if (that.values.hours < 0 || that.values.minutes < 0 || that.values.seconds < 0) {
+                        location.href = urlParamWebsite;
+                    }
+                    
+                    // Update DOM values
+                    // Hours
+                    that.checkHour(that.values.hours, $hour_1, $hour_2);
+        
+                    // Minutes
+                    that.checkHour(that.values.minutes, $min_1, $min_2);
+        
+                    // Seconds
+                    that.checkHour(that.values.seconds, $sec_1, $sec_2);
+        
+                    --that.total_seconds;
+                } else {
+                    clearInterval(that.countdown_interval);
                 }
-    
-                if(that.values.hours >= 0 && that.values.minutes < 0) {
-    
-                    that.values.minutes = 59;
-                    --that.values.hours;
-                }
-    
-                // Update DOM values
-                // Hours
-                that.checkHour(that.values.hours, $hour_1, $hour_2);
-    
-                // Minutes
-                that.checkHour(that.values.minutes, $min_1, $min_2);
-    
-                // Seconds
-                that.checkHour(that.values.seconds, $sec_1, $sec_2);
-    
-                --that.total_seconds;
             }
-            else {
-                clearInterval(that.countdown_interval);
-            }
-        }
         setTime();  // call once first to prevent initial delay in displaying time
         this.countdown_interval = setInterval(setTime, 1000);   
         },

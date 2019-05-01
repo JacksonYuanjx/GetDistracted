@@ -145,8 +145,8 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
             || str.endsWith(".tech") || str.endsWith(".tech/") || str.endsWith(".ai") || str.endsWith(".ai/");
     }
     function checkStartsWith(str) {
-        // must start with http or https in order for redirecting to work in blockedSite.js
-        return str.startsWith("http://www.") || str.startsWith("https://www.");
+        // must start with https://www. in order for redirecting to work in blockedSite.js and maintain consistency
+        return str.startsWith("https://www.");
     }
     function validURL(str) {
         return checkEndsWith(str) && checkStartsWith(str);
@@ -220,11 +220,12 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                     if (regex_website_temp.test(website) || regex_website.test(website_temp)) {
                         alert("website entered 1");
                         resolve(true);
+                        $('.missingBlankPrompt').find('span').text('website has already been entered!');
+                        $('.missingBlankPrompt').removeClass('hide');
                         return;
                     }
                 }
                 resolve(false);
-                alert("should not reach here");
                 return;
             }); 
         });
@@ -274,12 +275,10 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         if (!allFieldsComplete(website, difficulty, hour, minute)) {
             return;
         } 
-        alert("line before promise");
         // using function returned promise to check if website has been entered already
         // if not, then submit form, o.w. return
         hasWebsiteBeenEntered(website).then(function(result) { 
             if (!result) {
-                alert("website not entered");
                 // if all inputs are filled & website has not been entered, submit and save form inputs into cookies
                 var dataset = { "website": website, 
                                 "difficulty": difficulty, 
@@ -310,7 +309,7 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                 // NOTE: investigate expiration date setting of this function; why not use setCookie() defined at bottom?
                 location.reload();  // refreshes the page
             } else {
-                alert("website already entered!");
+                // alert("website already entered!");
                 return;
             }
         });
