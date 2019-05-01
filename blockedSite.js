@@ -7,19 +7,21 @@ $(document).ready(function() {
     $('.websiteName').text(urlParamWebsite);
     chrome.cookies.get({"url": "http://example.com/", "name": urlParamWebsite_JSONStr}, function(cookie) {   
         // alert(cookie.value);
+
         var cookieStr = JSON.stringify(cookie);
         var obj = JSON.parse(cookieStr);
-        var expirationDate = obj.expirationDate;
-        var difficulty = JSON.parse(obj.value).difficulty;
-        var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
 
-        // $('ul.websitesList').append("<li class='liElmt'><h2><b class='websiteURL'>"
-        //                          + urlParamWebsite + "</b><br><div class='siteListTimer'><b>Time Left:" 
-        //                          + "\xa0\xa0\xa0" + "</b><b id='timerHour'></b> hr \xa0" 
-        //                          + "<b id='timerMin'></b> min \xa0" + "<b id='timerSec'></b> sec" + "</div></h2></li>");
-        Countdown.init(difference);
-        loadQuestion(difficulty);
+        if (obj != null) {
+            var expirationDate = obj.expirationDate;
+            var difficulty = JSON.parse(obj.value).difficulty;
+            var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
 
+            Countdown.init(difference);
+            loadQuestion(difficulty);
+        } else {
+            // alert(urlParamWebsite);
+            window.location = urlParamWebsite;
+        } 
     });
     // INVESTIGATE: cookie is not being set correctly? the name has quotations included??
 
@@ -68,8 +70,18 @@ $(document).ready(function() {
             alert("correct answer!");
             // unblock website (remove from list, delete cookie?)
             // redirect page to the website
+            // var websiteURL = urlParamWebsite_JSONStr.substring(0, urlParamWebsite_JSONStr.length - 1).substr(1);
+            // alert("https://www." + websiteURL);
+
+            chrome.cookies.remove({ "url": "http://example.com/", name: urlParamWebsite_JSONStr}, function(deleted_cookie) {});
+            var websiteURL = urlParamWebsite_JSONStr.substring(0, urlParamWebsite_JSONStr.length - 1).substr(1);
+            alert("https://www." + websiteURL);
+            // location.replace("https://www." + websiteURL);
+            // window.location.assign("https://www.youtube.com/");
+            location.reload();
         } else {
             alert("errrr INCORRECT answer");
+            // window.location = "https://www.youtube.com/";
             // include popup msg below the input that temporarily says "incorrect" or smth then fades away 
             // (similar to focus btn msg on incomplete inputs)
         }

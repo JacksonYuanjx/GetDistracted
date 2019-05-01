@@ -124,9 +124,25 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         }
     });
     
-    
-    
-    
+    // function from: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
+    function isValidURL(string) {
+        var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+        if (res == null) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+    function checkEndsWith(str) {
+        return str.endsWith(".com") || str.endsWith(".ca") || str.endsWith(".com/") || str.endsWith(".ca/") 
+            || str.endsWith(".org") || str.endsWith(".org/") || str.endsWith(".net") || str.endsWith(".net/");
+    }
+    function checkStartsWith(str) {
+        return str.startsWith("http") || str.startsWith("https://");
+    }
+    function validURL(str) {
+        return checkEndsWith(str) && checkStartsWith(str);
+    }
     // Helper function that checks if all form fields have been completed
     function allFieldsComplete(website, difficulty, hour, minute) {
         if (website == '') {
@@ -135,6 +151,12 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
             return false;
         } 
         
+        if (!validURL(website)) {
+            $('.missingBlankPrompt').find('span').text('please input valid URL in specified format (e.g https://www.youtube.com)');
+            $('.missingBlankPrompt').removeClass('hide');
+            return false;
+        }
+
         if (hour == 'Hour') {
             $('.missingBlankPrompt').find('span').text('hour not selected');
             $('.missingBlankPrompt').removeClass('hide');
@@ -167,8 +189,11 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         }
     });
     
+    // Helper function that returns a promise for the asynchronous callback of cookies.getAll 
+    // to allow search for website through cookies to complete before function terminates
+    // Note: w/o a promise, the async callback will only complete after everything else in the 
+    //       caller function has executed
     function hasWebsiteBeenEntered(website) {
-        var websiteExists = false;
         return new Promise(function(resolve, reject) {
             chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
                 for (var n = 0; n < cookies.length; n++) {
@@ -181,8 +206,6 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                     var regex_website = new RegExp(website, "i");
                     if (regex_website_temp.test(website) || regex_website.test(website_temp)) {
                         alert("website entered 1");
-                        websiteExists = true;
-                        // alert(websiteExists);
                         resolve(true);
                         return;
                     }
@@ -191,22 +214,17 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                 alert("should not reach here");
                 return;
             }); 
-            // if (websiteExists) {
-            //     resolve();
-            // } else {
-            //     reject(Error("Retrieving cookies failed"));
-            // }
         });
 
-        promise.then(function(result) {
-            // promise is sucessful (resolved condition)
-            alert("result is " + result);
-            return result;
-        }).catch(function(error) {
-            // promise is unsuccessful (rejected condition)
-            alert("catch statement " + result);
-            return false;
-        })
+        // promise.then(function(result) {
+        //     // promise is sucessful (resolved condition)
+        //     alert("result is " + result);
+        //     return result;
+        // }).catch(function(error) {
+        //     // promise is unsuccessful (rejected condition)
+        //     alert("catch statement " + result);
+        //     return false;
+        // })
         
         // var getCookiesCallback = function(cookies) {
         //     return new Promise(function(resolve, reject) {
@@ -243,8 +261,9 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         if (!allFieldsComplete(website, difficulty, hour, minute)) {
             return;
         } 
-        var websiteEntered;
         alert("line before promise");
+        // using function returned promise to check if website has been entered already
+        // if not, then submit form, o.w. return
         hasWebsiteBeenEntered(website).then(function(result) { 
             if (!result) {
                 alert("website not entered");
@@ -322,19 +341,15 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
             var expirationDate = obj.expirationDate;
             var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
             var website = obj.name.substring(0, obj.name.length - 1).substr(1);
-//                alert(difference);
             $('ul.websitesList').append("<li class='liElmt'><h2><b class='websiteURL'>" + website + "</b><br><div class='siteListTimer'><b>Time Left:" + "\xa0\xa0\xa0" + "</b><b id='timerHour" + i + "'></b> hr \xa0" + "<b id='timerMin" + i + "'></b> min \xa0" + "<b id='timerSec" + i + "'></b> sec" + "</div></h2></li>");
             createTimer(difference, i);
         }
-        
-//        alert('onLoad loading cookies called');
     });
     
     
     $('.inputTab').on('click', function() {
         chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
             for (var i = 0; i < cookies.length; i++) {
-//                alert('second tab clicked');
                 window.clearInterval(timers[i]);
             }
         });
@@ -368,14 +383,11 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
     $('.websitesList').on('click', 'li.liElmt', function() {
         var website = $(this).find('.websiteURL').text();
         $.post('blockedSite.html', website, function(data) {
-                // alert(data);
                 // var tab = window.open('blockedSite.html', '_blank');
-                var tab = window.open('blockedSite.html?website=' + website, '_blank');
-                // $(tab).find('h2').append(data);
-                // $(tab).find('.title').append(website);
+                window.open('blockedSite.html?website=' + website, '_blank');
         });
             // URL params: https://stackoverflow.com/questions/5998425/url-format-with-get-parameters
-            // var tab = window.open('blockedSite.html?website=' + website, '_blank');
+            // window.open('blockedSite.html?website=' + website, '_blank');
     });
 
 

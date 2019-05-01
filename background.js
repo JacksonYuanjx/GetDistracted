@@ -73,8 +73,9 @@ chrome.webRequest.onBeforeRequest.addListener(
         loadBlockedSites();
         for (var i = 0; i < blockedSites.length; i++) {
             console.log(blockedSites[i]);
-            var regex1 = RegExp(".*" + blockedSites[i] + ".*");
-            if (regex1.test(details.url)) {
+            var regex1 = RegExp(blockedSites[i], "i");
+            var regex2 = RegExp(details.url, "i");
+            if (regex1.test(details.url) || regex2.test(blockedSites[i])) {
                 // alert(details.url);
                 // CURRENT BUG: redirecting only works after the first time???
                 return {redirectUrl: chrome.runtime.getURL("blockedSite.html?website=" + blockedSites[i])};
