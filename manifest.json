@@ -5,14 +5,20 @@
  "version": "1",
  "author": "Jackson Yuan",
 
-"browser_action": {
-    "default_icon": "tab-icon.png",   
+ "icons": {
+   "16": "icons/icon16x16.png",
+   "48": "icons/icon48x48.png",
+   "128": "icons/icon128x128.png"
+ },
+
+ "browser_action": {
+    "default_icon": "icons/icon16x16.png",   
     "default_title": "GetDistracted",
     "default_popup": "popup.html"
  },
 
  "background": {
-   "scripts": ["background.js"],
+   "scripts": ["src/js/background.js"],
    "persistent": true
  },
 

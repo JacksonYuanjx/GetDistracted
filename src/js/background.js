@@ -50,9 +50,9 @@ var blockedSites = [];  // array of blocked sites stored as strings
 // helper function that loads blocked sites from cookies into blockedSites[]
 function loadBlockedSites() {
     chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
-        if (cookies.length == 0) {
+        // if (cookies.length == 0) {
             blockedSites = [];
-        }
+        // } 
         for (var i = 0; i < cookies.length; i++) {
             // alert(i);
             var cookieStr = JSON.stringify(cookies[i]);

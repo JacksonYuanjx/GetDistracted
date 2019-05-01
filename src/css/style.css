@@ -20,6 +20,9 @@ nav {
   width: 100%;
   padding: 20px 0;
   text-align: center;
+  font-family: "Quicksand";
+  font-weight: bolder;
+  font-size: 1.5em;
 }
 
 .siteToBlock {
@@ -70,6 +73,8 @@ footer {
   overflow: hidden;
   cursor: pointer;
   color: white;
+  font-size: 1.25em;
+  font-weight: bolder;
 }
 .tabs > li:before {
   z-index: -1;
@@ -127,14 +132,6 @@ footer {
   padding-bottom: 20px;
   font-weight: 300;
 }
-
-/*
-.content_wrapper img {
-  width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-*/
 
 .colors {
   text-align: center;
@@ -409,7 +406,7 @@ input::-moz-focus-outer {
     font-size: 1.2rem;
     line-height: 1.75rem;
     vertical-align: middle;
-    border-radius: 0px;
+    /* border-radius: 0px; */
     border-color: transparent transparent darkgreen transparent;
 }
 
@@ -421,7 +418,7 @@ input::-moz-focus-outer {
     background-color: transparent;
 }
 
-.siteToBlock[placeholder='e.g. www.youtube.com'] {
+.siteToBlock[placeholder='https://www.youtube.com'] {
     opacity: 0.75;
 }
 

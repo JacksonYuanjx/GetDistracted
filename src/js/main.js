@@ -124,6 +124,7 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         }
     });
     
+
     // function from: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
     function isValidURL(string) {
         var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
@@ -133,16 +134,25 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
             return true;
         }
     };
+
+    // set of brute force functions to check if URL str is valid
     function checkEndsWith(str) {
         return str.endsWith(".com") || str.endsWith(".ca") || str.endsWith(".com/") || str.endsWith(".ca/") 
-            || str.endsWith(".org") || str.endsWith(".org/") || str.endsWith(".net") || str.endsWith(".net/");
+            || str.endsWith(".org") || str.endsWith(".org/") || str.endsWith(".net") || str.endsWith(".net/")
+            || str.endsWith(".int") || str.endsWith(".int/") || str.endsWith(".edu") || str.endsWith(".edu/")
+            || str.endsWith(".gov") || str.endsWith(".gov/") || str.endsWith(".io") || str.endsWith(".io/")
+            || str.endsWith(".co") || str.endsWith(".co/") || str.endsWith(".site") || str.endsWith(".site/")
+            || str.endsWith(".tech") || str.endsWith(".tech/") || str.endsWith(".ai") || str.endsWith(".ai/");
     }
     function checkStartsWith(str) {
-        return str.startsWith("http") || str.startsWith("https://");
+        // must start with http or https in order for redirecting to work in blockedSite.js
+        return str.startsWith("http://www.") || str.startsWith("https://www.");
     }
     function validURL(str) {
         return checkEndsWith(str) && checkStartsWith(str);
     }
+
+    
     // Helper function that checks if all form fields have been completed
     function allFieldsComplete(website, difficulty, hour, minute) {
         if (website == '') {
@@ -152,7 +162,7 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         } 
         
         if (!validURL(website)) {
-            $('.missingBlankPrompt').find('span').text('please input valid URL in specified format (e.g https://www.youtube.com)');
+            $('.missingBlankPrompt').find('span').text('please input valid URL in SPECIFIED FORMAT (e.g https://www.youtube.com)');
             $('.missingBlankPrompt').removeClass('hide');
             return false;
         }
@@ -181,11 +191,14 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         var hour = $('.hour').val();
         var minute = $('.minute').val();
         
-        if (event.keyCode == 13 && (allFieldsComplete(website, difficulty, hour, minute) == false)) {
+        if (event.keyCode == 13) {
             event.preventDefault();
-            $('.missingBlankPrompt').find('span').text('website not inputted');
-            $('.missingBlankPrompt').removeClass('hide');
-            return false;
+            allFieldsComplete(website, difficulty, hour, minute);
+            // if (allFieldsComplete(website, difficulty, hour, minute) == false) {
+            //     $('.missingBlankPrompt').find('span').text('website not inputted');
+            //     $('.missingBlankPrompt').removeClass('hide');
+            //     return false;
+            // }
         }
     });
     
@@ -356,7 +369,7 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
     });
     
     
-    // monitor if user has navigated onto mainTab, then load cookies 
+    // monitor if user has navigated onto mainTab (first tab), then load cookies 
     $('.mainTab').on('click', function() {
 //        alert('first tab clicked')
         $('ul.websitesList').empty();  // clear list of websites before rendering cookies

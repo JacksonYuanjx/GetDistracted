@@ -19,7 +19,7 @@ $(document).ready(function() {
             Countdown.init(difference);
             loadQuestion(difficulty);
         } else {
-            // alert(urlParamWebsite);
+            alert(urlParamWebsite);
             window.location = urlParamWebsite;
         } 
     });
@@ -28,11 +28,11 @@ $(document).ready(function() {
     // helper function that loads question onto screen and returns the answer to that question
     function loadQuestion(difficulty) {
 
-        $.getJSON('questions.json', function(data) {
+        $.getJSON('src/questions.json', function(data) {  // for file location, use location relative to position of blockedSite.html
             var dataObj = JSON.parse(JSON.stringify(data));
             var question;
             var idx = getRandomIntInclusive(0, dataObj.questions_basic.length - 1);
-            // maintain invariant in questions.json that each difficult set has same # of questions
+            // maintain invariant in questions.json that each difficulty set has same # of questions
             if (difficulty == "Basic") {
                 question = dataObj.questions_basic[idx].question;
                 answer = dataObj.questions_basic[idx].answer;
