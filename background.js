@@ -46,17 +46,21 @@
 // );
 
 var blockedSites = [];  // array of blocked sites stored as strings
+
 // helper function that loads blocked sites from cookies into blockedSites[]
 function loadBlockedSites() {
-    // blockedSites = [];
     chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
+        if (cookies.length == 0) {
+            blockedSites = [];
+        }
         for (var i = 0; i < cookies.length; i++) {
             // alert(i);
             var cookieStr = JSON.stringify(cookies[i]);
             var obj = JSON.parse(cookieStr);
             var website = obj.name.substring(0, obj.name.length - 1).substr(1);
-            blockedSites.push(website);
-
+            if (!blockedSites.includes(website)) {
+                blockedSites.push(website);
+            }
         }
     });
 }
@@ -68,6 +72,7 @@ chrome.webRequest.onBeforeRequest.addListener(
         // }
         loadBlockedSites();
         for (var i = 0; i < blockedSites.length; i++) {
+            console.log(blockedSites[i]);
             var regex1 = RegExp(".*" + blockedSites[i] + ".*");
             if (regex1.test(details.url)) {
                 // alert(details.url);

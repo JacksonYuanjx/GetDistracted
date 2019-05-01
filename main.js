@@ -167,7 +167,73 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         }
     });
     
-    // ?????
+    function hasWebsiteBeenEntered(website) {
+        var websiteExists = false;
+        return new Promise(function(resolve, reject) {
+            chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
+                for (var n = 0; n < cookies.length; n++) {
+                    var cookieStr = JSON.stringify(cookies[n]);
+                    var obj = JSON.parse(cookieStr);
+                    var website_temp = obj.name.substring(0, obj.name.length - 1).substr(1);
+                    // must use regex b/c URL could have preceding/trailing components
+                    // creating 2 RegExp objs to consider both cases where form input is either longer/shorter than value in cookie
+                    var regex_website_temp = new RegExp(website_temp, "i");  
+                    var regex_website = new RegExp(website, "i");
+                    if (regex_website_temp.test(website) || regex_website.test(website_temp)) {
+                        alert("website entered 1");
+                        websiteExists = true;
+                        // alert(websiteExists);
+                        resolve(true);
+                        return;
+                    }
+                }
+                resolve(false);
+                alert("should not reach here");
+                return;
+            }); 
+            // if (websiteExists) {
+            //     resolve();
+            // } else {
+            //     reject(Error("Retrieving cookies failed"));
+            // }
+        });
+
+        promise.then(function(result) {
+            // promise is sucessful (resolved condition)
+            alert("result is " + result);
+            return result;
+        }).catch(function(error) {
+            // promise is unsuccessful (rejected condition)
+            alert("catch statement " + result);
+            return false;
+        })
+        
+        // var getCookiesCallback = function(cookies) {
+        //     return new Promise(function(resolve, reject) {
+        //         for (var i = 0; i < cookies.length; i++) {
+        //             var cookieStr = JSON.stringify(cookies[i]);
+        //             var obj = JSON.parse(cookieStr);
+        //             var website_temp = obj.name.substring(0, obj.name.length - 1).substr(1);
+        //             var regex_website = RegExp(".*" + website + ".*");  // must use regex b/c url could have preceding/trailing components 
+        //             if (regex_website.test(website_temp)) {
+        //                 alert("website entered 1");
+        //                 websiteExists = true;
+        //             }
+        //         }
+        //         if (websiteExists) {
+        //             resolve();
+        //         } else {
+        //             reject(Error("Retrieving cookies failed"));
+        //         } 
+        //     });
+        // }
+        // chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
+        //     getCookiesCallback(cookies);
+        // });
+        // return websiteExists;
+    }
+
+    // Function that executes when form submit btn is clicked, will set cookies with details from form
     $('.focusBtn').on('click', function() {
         
         var website = $('.siteToBlock').val();
@@ -177,37 +243,53 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         if (!allFieldsComplete(website, difficulty, hour, minute)) {
             return;
         } 
-        
+        var websiteEntered;
+        alert("line before promise");
+        hasWebsiteBeenEntered(website).then(function(result) { 
+            if (!result) {
+                alert("website not entered");
+                // if all inputs are filled & website has not been entered, submit and save form inputs into cookies
+                var dataset = { "website": website, 
+                                "difficulty": difficulty, 
+                                "hour": hour, 
+                                "minute": minute };
+                var cookie_str = JSON.stringify(dataset);
+                var website_str = JSON.stringify(website);
+                //        var obj = {}
+                //        setCookie(website, cookie_str, '365');
 
-        // if all inputs are filled, submit and save form inputs into cookies
-        var dataset = { "website": website, 
-                        "difficulty": difficulty, 
-                        "hour": hour, 
-                        "minute": minute };
-        var cookie_str = JSON.stringify(dataset);
-        var website_str = JSON.stringify(website);
-//        var obj = {}
-//        setCookie(website, cookie_str, '365');
-        
-        var currentTime = new Date().getTime() / 1000;    // currentTime in seconds
-        var timerLength = (hour * 3600) + (minute * 60);  // timerLength in seconds
-        var expirationDate;
-        
-//         if (hour == '-1' || minute == '-2') {
-//             // 'Until Problem Solved' option selected, set expirationDate to 12 months from now
-// //            alert('selected');
-//             expirationDate = currentTime + 31540000;
-//         } else {
-            // otherwise, set expirationDate to length of timer
-//            alert('else case');
-            expirationDate = currentTime + timerLength;   // set expirationDate to length of timer
-//            alert(currentTime);
-//            alert(timerLength); 
-//            alert(expirationDate); 
+                var currentTime = new Date().getTime() / 1000;    // currentTime in seconds
+                var timerLength = (hour * 3600) + (minute * 60);  // timerLength in seconds
+                var expirationDate;
+
+                //         if (hour == '-1' || minute == '-2') {
+                //             // 'Until Problem Solved' option selected, set expirationDate to 12 months from now
+                // //            alert('selected');
+                //             expirationDate = currentTime + 31540000;
+                //         } else {
+                // otherwise, set expirationDate to length of timer
+                //            alert('else case');
+                expirationDate = currentTime + timerLength;   // set expirationDate to length of timer
+                //            alert(currentTime);
+                //            alert(timerLength); 
+                //            alert(expirationDate); 
+                // }
+                chrome.cookies.set({ url: "http://example.com/", name: website_str, value: cookie_str, expirationDate: expirationDate});     // expirationDate starts from UNIX epoch time
+                // NOTE: investigate expiration date setting of this function; why not use setCookie() defined at bottom?
+                location.reload();  // refreshes the page
+            } else {
+                alert("website already entered!");
+                return;
+            }
+        });
+        // alert(websiteEntered);
+        // alert("line before check");
+        // if (websiteEntered) {
+        //     alert("GOAL");
+        //     return;
         // }
-        chrome.cookies.set({ url: "http://example.com/", name: website_str, value: cookie_str, expirationDate: expirationDate});     // expirationDate starts from UNIX epoch time
-        // NOTE: investigate expiration date setting of this function; why not use setCookie() defined at bottom?
-        location.reload();  // refreshes the page
+        // alert("line after hasWebsiteBeenEntered");
+  
     });
     
     
