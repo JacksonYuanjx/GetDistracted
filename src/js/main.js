@@ -81,14 +81,8 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
     
     
 // *****        FUNCTION FOR RANGE SLIDER        ******
-    
     $('.range_slider').on('mouseup', function() {
         var sliderValue = $('.range_slider_range').val();
-
-        //    $('#intermediate').removeClass('activeOption');
-        //    $('.range_labels').css("background-color", "blue");
-
-        //        alert(sliderValue);
         $('.range_labels > .activeOption').removeClass('activeOption');
 
         switch(sliderValue) {
@@ -184,11 +178,6 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         if (event.keyCode == 13) {
             event.preventDefault();
             allFieldsComplete(website, difficulty, hour, minute);
-            // if (allFieldsComplete(website, difficulty, hour, minute) == false) {
-            //     $('.missingBlankPrompt').find('span').text('website not inputted');
-            //     $('.missingBlankPrompt').removeClass('hide');
-            //     return false;
-            // }
         }
     });
     
@@ -208,7 +197,6 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                     var regex_website_temp = new RegExp(website_temp, "i");  
                     var regex_website = new RegExp(website, "i");
                     if (regex_website_temp.test(website) || regex_website.test(website_temp)) {
-                        alert("website entered 1");
                         resolve(true);
                         $('.missingBlankPrompt').find('span').text('website has already been entered!');
                         $('.missingBlankPrompt').removeClass('hide');
@@ -219,40 +207,6 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                 return;
             }); 
         });
-
-        // promise.then(function(result) {
-        //     // promise is sucessful (resolved condition)
-        //     alert("result is " + result);
-        //     return result;
-        // }).catch(function(error) {
-        //     // promise is unsuccessful (rejected condition)
-        //     alert("catch statement " + result);
-        //     return false;
-        // })
-        
-        // var getCookiesCallback = function(cookies) {
-        //     return new Promise(function(resolve, reject) {
-        //         for (var i = 0; i < cookies.length; i++) {
-        //             var cookieStr = JSON.stringify(cookies[i]);
-        //             var obj = JSON.parse(cookieStr);
-        //             var website_temp = obj.name.substring(0, obj.name.length - 1).substr(1);
-        //             var regex_website = RegExp(".*" + website + ".*");  // must use regex b/c url could have preceding/trailing components 
-        //             if (regex_website.test(website_temp)) {
-        //                 alert("website entered 1");
-        //                 websiteExists = true;
-        //             }
-        //         }
-        //         if (websiteExists) {
-        //             resolve();
-        //         } else {
-        //             reject(Error("Retrieving cookies failed"));
-        //         } 
-        //     });
-        // }
-        // chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
-        //     getCookiesCallback(cookies);
-        // });
-        // return websiteExists;
     }
 
     // Function that executes when form submit btn is clicked, will set cookies with details from form
@@ -265,6 +219,7 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         if (!allFieldsComplete(website, difficulty, hour, minute)) {
             return;
         } 
+        
         // using function returned promise to check if website has been entered already
         // if not, then submit form, o.w. return
         hasWebsiteBeenEntered(website).then(function(result) { 
@@ -276,45 +231,20 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                                 "minute": minute };
                 var cookie_str = JSON.stringify(dataset);
                 var website_str = JSON.stringify(website);
-                //        var obj = {}
-                //        setCookie(website, cookie_str, '365');
-
                 var currentTime = new Date().getTime() / 1000;    // currentTime in seconds
                 var timerLength = (hour * 3600) + (minute * 60);  // timerLength in seconds
                 var expirationDate;
-
-                //         if (hour == '-1' || minute == '-2') {
-                //             // 'Until Problem Solved' option selected, set expirationDate to 12 months from now
-                // //            alert('selected');
-                //             expirationDate = currentTime + 31540000;
-                //         } else {
-                // otherwise, set expirationDate to length of timer
-                //            alert('else case');
                 expirationDate = currentTime + timerLength;   // set expirationDate to length of timer
-                //            alert(currentTime);
-                //            alert(timerLength); 
-                //            alert(expirationDate); 
-                // }
                 chrome.cookies.set({ url: "http://example.com/", name: website_str, value: cookie_str, expirationDate: expirationDate});     // expirationDate starts from UNIX epoch time
                 // NOTE: investigate expiration date setting of this function; why not use setCookie() defined at bottom?
                 location.reload();  // refreshes the page
             } else {
-                // alert("website already entered!");
                 return;
             }
         });
-        // alert(websiteEntered);
-        // alert("line before check");
-        // if (websiteEntered) {
-        //     alert("GOAL");
-        //     return;
-        // }
-        // alert("line after hasWebsiteBeenEntered");
-  
     });
     
     
-
     var timers = [];  // array to keep track of timers, since setInterval() runs on a different thread and persists after caller function is finished
     function createTimer(difference, i) {
         var hour;
@@ -360,9 +290,7 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
     
     // monitor if user has navigated onto mainTab (first tab), then load cookies 
     $('.mainTab').on('click', function() {
-//        alert('first tab clicked')
         $('ul.websitesList').empty();  // clear list of websites before rendering cookies
-//            window.clearInterval(timers[i]);
         chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
             for (var i = 0; i < cookies.length; i++) {
                 clearInterval(timers[i]);  // clear timer before creating new one again
@@ -379,25 +307,19 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
 
     });
     
-    // monitor if blocked website list elmt has been clicked
-    // if clicked, redirect to blocked site page w/ timer
-    $('.websitesList').on('click', 'li.liElmt', function() {
-        var website = $(this).find('.websiteURL').text();
-        // $.post('blockedSite.html', website, function(data) {
-                // var tab = window.open('blockedSite.html', '_blank');
-                window.open('blockedSite.html?website=' + website, '_blank');
-        // });
-            // URL params: https://stackoverflow.com/questions/5998425/url-format-with-get-parameters
-            // window.open('blockedSite.html?website=' + website, '_blank');
-    });
+// Not loading new tab for some reason? Error: too many redirects?
+    // // monitor if blocked website list elmt has been clicked
+    // // if clicked, redirect to blocked site page w/ timer
+    // $('.websitesList').on('click', 'li.liElmt', function() {
+    //     var website = $(this).find('.websiteURL').text();
+    //     // $.post('blockedSite.html', website, function(data) {
+    //             // var tab = window.open('blockedSite.html', '_blank');
+    //             window.open('blockedSite.html?website=' + website, '_blank');
+    //     // });
+    //         // URL params: https://stackoverflow.com/questions/5998425/url-format-with-get-parameters
+    //         // window.open('blockedSite.html?website=' + website, '_blank');
+    // });
 
-
-    // IMPLEMENT url mandatory input or smth and auto fill 'http'
-    // enter url, when hit enter, the missingPrompt still retains...
-    // long website names pushing the timer indicator out of the list element box
-    
-    // the most recent added cookie's time is displayed across all li elements
-    // b/c using the same class to insert, fix css or classing
 });
 
 
@@ -424,27 +346,4 @@ function getCookie(name) {
     }
     return null;
 }
-
-
-
-    // monitor if user has navigated onto mainTab, then load cookies 
-//    clickedTab.click(function() {
-//        if ($(clickedTab.hasClass('.mainTab'))) {
-//            alert('first tab clicked')
-//            $('ul.websitesList').empty();  // clear list of websites before rendering cookies
-////            window.clearInterval(timers[i]);
-//            chrome.cookies.getAll({ url: "http://example.com/" }, function(cookies) {
-//                for (var i = 0; i < cookies.length; i++) {
-//                    var cookieStr = JSON.stringify(cookies[i]);
-//                    var obj = JSON.parse(cookieStr);
-//                    var expirationDate = obj.expirationDate;
-//                    var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
-//                    var website = obj.name.substring(0, obj.name.length - 1).substr(1);
-////                    alert(cookies.length);
-//                    $('ul.websitesList').append("<li><h2><b class='websiteURL'>" + website + "</b><br /><div class='siteListTimer'><b>Time Left:" + "\xa0\xa0\xa0" + "</b><b id='timerHour" + i + "'></b> hr \xa0" + "<b id='timerMin" + i + "'></b> min \xa0" + "<b id='timerSec" + i + "'></b> sec" + "</div></h2></li>");
-////                    createTimer(difference, i); 
-//                }
-//            });
-//        }
-//    });
     

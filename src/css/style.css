@@ -7,7 +7,6 @@
 body {
   font-family: 'Quicksand', sans-serif;
   color: #50555a;
-/*    background-color: #46a1de;*/
 }
 
 nav {
@@ -232,7 +231,7 @@ footer {
   border-radius: 50%;
   background: #2c3e50;
   cursor: pointer;
-  transition: background .15s ease-in-out;
+  transition: .15s ease-in-out;
 }
 .range_slider_range::-moz-range-thumb:hover {
   background: #1abc9c;
@@ -451,15 +450,11 @@ input::-moz-focus-outer {
 }
 
 .websiteURL {
-/*    float: left;*/
     vertical-align: top;
     padding: 12px 12.5px 7.5px 12px;
-/*    USE DIFFERENT FONT HERE*/
-/*    transition: 1s;*/
 }
 
 .siteListTimer {
-/*    float: right;*/
     font-size: 12px;
     vertical-align: bottom;
     padding: 12px 12.5px 7.5px 12px;

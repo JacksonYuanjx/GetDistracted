@@ -6,7 +6,6 @@ $(document).ready(function() {
 
     $('.websiteName').text(urlParamWebsite);
     chrome.cookies.get({"url": "http://example.com/", "name": urlParamWebsite_JSONStr}, function(cookie) {   
-        // alert(cookie.value);
         var cookieStr = JSON.stringify(cookie);
         var obj = JSON.parse(cookieStr);
 
@@ -18,7 +17,6 @@ $(document).ready(function() {
             Countdown.init(difference);
             loadQuestion(difficulty);
         } else {
-            // alert(urlParamWebsite);
             window.location = urlParamWebsite;
         } 
     });
@@ -35,14 +33,12 @@ $(document).ready(function() {
                 question = dataObj.questions_basic[idx].question;
                 answer = dataObj.questions_basic[idx].answer;
             } else if (difficulty == "Intermediate") {
-                question = dataObj.questions_intermediate[1].question;
-                answer = dataObj.questions_intermediate[1].answer;
+                question = dataObj.questions_intermediate[idx].question;
+                answer = dataObj.questions_intermediate[idx].answer;
             } else {
                 question = dataObj.questions_advanced[idx].question;
                 answer = dataObj.questions_advanced[idx].answer;
             }
-            // alert(question);
-            // alert(answer);
             $('.question').append(question);
         });
     }
@@ -63,25 +59,17 @@ $(document).ready(function() {
             return;
         }
 
-        // alert(answer);
         if (inputAnswer == answer) {
-            alert("correct answer!");
-            // unblock website (remove from list, delete cookie?)
+            // unblock website (remove from list by deleting cookie)
             // redirect page to the website
-            // var websiteURL = urlParamWebsite_JSONStr.substring(0, urlParamWebsite_JSONStr.length - 1).substr(1);
-            // alert("https://www." + websiteURL);
-
             chrome.cookies.remove({ "url": "http://example.com/", name: urlParamWebsite_JSONStr}, function(deleted_cookie) {});
             var websiteURL = urlParamWebsite_JSONStr.substring(0, urlParamWebsite_JSONStr.length - 1).substr(1);
-            alert("https://www." + websiteURL);
+            // alert("https://www." + websiteURL);
             // location.replace("https://www." + websiteURL);
-            // window.location.assign("https://www.youtube.com/");
             location.reload();
         } else {
             alert("INCORRECT answer, please try again!");
-            // window.location = "https://www.youtube.com/";
-            // include popup msg below the input that temporarily says "incorrect" or smth then fades away 
-            // (similar to focus btn msg on incomplete inputs)
+            // could also implement hidden text msg that appears instead of alert popup
         }
     })
 
@@ -164,7 +152,7 @@ $(document).ready(function() {
                     if (that.values.hours < 0 || that.values.minutes < 0 || that.values.seconds < 0) {
                         location.href = urlParamWebsite;
                     }
-                    
+
                     // Update DOM values
                     // Hours
                     that.checkHour(that.values.hours, $hour_1, $hour_2);
@@ -242,9 +230,7 @@ $(document).ready(function() {
         }    
         }
     };
-    
     // Countdown.init();
-
 });
 
 

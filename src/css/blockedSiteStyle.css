@@ -39,8 +39,7 @@ body {
 }
 
 .skewed-bg {
-/*  background: #00B285;*/
-    background: #7889a3;
+  background: #7889a3;
   padding: 200px 0;
   -webkit-transform: skew(0deg, -45deg);
 /*
@@ -244,23 +243,6 @@ h2 strong {
   right: 0;
   margin: auto;
 }
-
-
-
-
-/*
-.footer {
-  padding-top: 300px;
-}
-.footer .credits {
-  text-align: center;
-  color: #666;
-}
-.footer .credits .link {
-  color: #00B285;
-  text-decoration: none;
-}
-*/
 
 
 

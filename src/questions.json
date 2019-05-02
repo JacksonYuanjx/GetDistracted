@@ -46,24 +46,6 @@
             "id": 7,
             "question": "If log(1/128) = x, where the base of the log is 2, then x = __",
             "answer": "-7"
-        },
-
-        {
-            "id": 8,
-            "question": "QUESTION 8",
-            "answer": "ANSWER 8"
-        },
-
-        {
-            "id": 9,
-            "question": "QUESTION 9",
-            "answer": "ANSWER 9"
-        },
-
-        {
-            "id": 10,
-            "question": "QUESTION 10",
-            "answer": "ANSWER 10"
         }
     ],
 
