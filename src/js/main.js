@@ -1,4 +1,4 @@
-$(document).ready(function () { // must put in "$(document).ready()" because this will wait for all html elements to load first, can also do $(function())
+$(document).ready(function () { // must put in "$(document).ready()" because this will wait for all html elements to load first, can also do $(function() {...})
 
     
 // *****         FUNCTIONS FOR THE TABS        ******
@@ -124,16 +124,6 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
         }
     });
     
-
-    // function from: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
-    function isValidURL(string) {
-        var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
-        if (res == null) {
-            return false;
-        } else {
-            return true;
-        }
-    };
 
     // set of brute force functions to check if URL str is valid
     function checkEndsWith(str) {
@@ -382,7 +372,6 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
                 var expirationDate = obj.expirationDate;
                 var difference = expirationDate - (new Date().getTime() / 1000);  // in seconds 
                 var website = obj.name.substring(0, obj.name.length - 1).substr(1);
-//                    alert(cookies.length);
                 $('ul.websitesList').append("<li class='liElmt'><h2><b class='websiteURL'>" + website + "</b><br><div class='siteListTimer'><b>Time Left:" + "\xa0\xa0\xa0" + "</b><b id='timerHour" + i + "'></b> hr \xa0" + "<b id='timerMin" + i + "'></b> min \xa0" + "<b id='timerSec" + i + "'></b> sec" + "</div></h2></li>");
                 createTimer(difference, i); 
             }
@@ -394,10 +383,10 @@ $(document).ready(function () { // must put in "$(document).ready()" because thi
     // if clicked, redirect to blocked site page w/ timer
     $('.websitesList').on('click', 'li.liElmt', function() {
         var website = $(this).find('.websiteURL').text();
-        $.post('blockedSite.html', website, function(data) {
+        // $.post('blockedSite.html', website, function(data) {
                 // var tab = window.open('blockedSite.html', '_blank');
                 window.open('blockedSite.html?website=' + website, '_blank');
-        });
+        // });
             // URL params: https://stackoverflow.com/questions/5998425/url-format-with-get-parameters
             // window.open('blockedSite.html?website=' + website, '_blank');
     });

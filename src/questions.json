@@ -2,50 +2,50 @@
     "questions_basic": [
         {
             "id": 0,
-            "question": "QUESTION 0",
-            "answer": "ANSWER 0"
+            "question": "What is the slope of the line with the equation 2x + 3y + 6 = 0",
+            "answer": "-2/3"
         },   
 
         {
             "id": 1,
-            "question": "QUESTION 1",
-            "answer": "ANSWER 1"
+            "question": "If log5 = 0.6990 and log3 = 0.4771, then log45 = __ (to 4 decimal places)",
+            "answer": "1.6532"
         },
 
         {
             "id": 2,
-            "question": "QUESTION 2",
-            "answer": "ANSWER 2"
+            "question": "If log81 = x, where the base of the log is 3, then x = __",
+            "answer": "4"
         },
 
         {
             "id": 3,
-            "question": "QUESTION 3",
-            "answer": "ANSWER 3"
+            "question": "Given that a circle \uC2B0 has 2\u03c0 radians, how many degrees are equal to \u03c0/12 radians?",
+            "answer": "15"
         },
 
         {
             "id": 4,
-            "question": "QUESTION 4",
-            "answer": "ANSWER 4"
+            "question": "2sinxcosx = ",
+            "answer": "sin2x"
         },
 
         {
             "id": 5,
-            "question": "QUESTION 5",
-            "answer": "ANSWER 5"
+            "question": "Solve tan\u00B2x = 1, where 0 <= x <= \uC2B0. Use 'pi' and separate your answers w/ a comma",
+            "answer": "pi/4,3pi/4"
         },   
 
         {
             "id": 6,
-            "question": "QUESTION 6",
-            "answer": "ANSWER 6"
+            "question": "If f(x) = 4x - 2, then f(x-1) = __. (Separate terms w/ a space)",
+            "answer": "4x - 6"
         },
 
         {
             "id": 7,
-            "question": "QUESTION 7",
-            "answer": "ANSWER 7"
+            "question": "If log(1/128) = x, where the base of the log is 2, then x = __",
+            "answer": "-7"
         },
 
         {
@@ -70,136 +70,100 @@
     "questions_intermediate": [
         {
             "id": 0,
-            "question": "QUESTION 0",
-            "answer": "ANSWER 0"
+            "question": "Compute the limit as x approaches 1 of (x\u2074 - 2x\u00B3 + 3x\u00B2 + 4x - 5). Write 'DNE' if the limit does not exist",
+            "answer": "1"
         },   
 
         {
             "id": 1,
-            "question": "QUESTION 1 fasdkjflaksdjfljasldkfjalskdjflksajdflkasjldfjasldfjlasdjflkasdjflksjdfoirowieoaowjflaskdjflskdvlsldjfpaosndfoweof owjfoaisdjf;aslkdfl;asjdlfjsaldkfjasldkfjowiejflakd",
-            "answer": "ANSWER 1"
+            "question": "Determine the inflection point of f(x) = -x\u00B3 + 3x\u00B2 + 1. Write intervals like (0,0) for non-inclusive or [0,0] for inclusive and use 'inf' for infinity in your answer",
+            "answer": "(1,3)"
         },
 
         {
             "id": 2,
-            "question": "QUESTION 2",
-            "answer": "ANSWER 2"
+            "question": "Evaluate the limit as x approaches 0 of log(x)/x. Write 'DNE' if the limit does not exist",
+            "answer": "DNE"
         },
 
         {
             "id": 3,
-            "question": "QUESTION 3",
-            "answer": "ANSWER 3"
+            "question": "Find the inflection point of f(x) = -2x\u00B3 + 6x\u00B2 - 10x + 5. Write intervals like (0,0) for non-inclusive or [0,0] for inclusive and use 'inf' for infinity in your answer",
+            "answer": "(1,-1)"
         },
 
         {
             "id": 4,
-            "question": "QUESTION 4",
-            "answer": "ANSWER 4"
+            "question": "Compute the limit as (x,y) approaches (0,0) of 4xycos(xy) + x\u00B2 - y\u00B3. Write 'DNE' if the limit does not exist",
+            "answer": "0"
         },
-
+        
         {
             "id": 5,
-            "question": "QUESTION 5",
-            "answer": "ANSWER 5"
+            "question": "Differentiate cosx",
+            "answer": "-sinx"
         },   
 
         {
             "id": 6,
-            "question": "QUESTION 6",
-            "answer": "ANSWER 6"
+            "question": "Find the interval for x where the function, f(x) = -2x\u00B3 + 6x\u00B2 - 10x + 5, is concave up. Write intervals like (0,0) for non-inclusive or [0,0] for inclusive and use 'inf' for infinity in your answer",
+            "answer": "(-inf, 1)"
         },
 
         {
             "id": 7,
-            "question": "QUESTION 7",
-            "answer": "ANSWER 7"
-        },
-
-        {
-            "id": 8,
-            "question": "QUESTION 8",
-            "answer": "ANSWER 8"
-        },
-
-        {
-            "id": 9,
-            "question": "QUESTION 9",
-            "answer": "ANSWER 9"
-        },
-
-        {
-            "id": 10,
-            "question": "QUESTION 10",
-            "answer": "ANSWER 10"
+            "question": "Evaluate the limit as x approaches 0 of x/log(x). Write 'DNE' if the limit does not exist",
+            "answer": "0"
         }
     ],
 
     "questions_advanced": [
         {
             "id": 0,
-            "question": "QUESTION 0",
-            "answer": "ANSWER 0"
+            "question": "Let P(1, 0, -3), Q(0, -2, -4) and R(4, 1, 6) be points. Find the equation of the plane through the points P, Q and R. Write the equation in standard form and separate all terms with a space",
+            "answer": "17x - 6y - 5z = 32"
         },   
 
         {
             "id": 1,
-            "question": "QUESTION 1",
-            "answer": "ANSWER 1"
+            "question": "Let P(1, 0, -3), Q(0, -2, -4) and R(4, 1, 6) be points. Find the area of the triangle w/ vertices P, Q and R. Round your answer to 2 decimal places",
+            "answer": "9.35"
         },
 
         {
             "id": 2,
-            "question": "QUESTION 2",
-            "answer": "ANSWER 2"
+            "question": "Find the equation of the tangent plane to the surface z = 4x\u00B3y\u00B2 + 2y at point (1, -2, 12), in standard form. Separate all terms with a space.",
+            "answer": "48x - 14y - z = 64"
         },
 
         {
             "id": 3,
-            "question": "QUESTION 3",
-            "answer": "ANSWER 3"
+            "question": "For the line through A = (1, 2, 3) and B = (0, 2, 2), find the intersection between the line and the sphere of equation x\u00B2 + y\u00B2 + z\u00B2 = 8. Separate all points with a comma like so: (0,0,0),(1,1,1)",
+            "answer": "(0,2,2),(-2,2,0)"
         },
 
         {
             "id": 4,
-            "question": "QUESTION 4",
-            "answer": "ANSWER 4"
+            "question": "Find the angle between the two planes x + y = 0 and y - z = 2, in radians. Use 'pi' for \u03C0 in your answer",
+            "answer": "pi/3"
         },
 
         {
             "id": 5,
-            "question": "QUESTION 5",
-            "answer": "ANSWER 5"
+            "question": "Evaluate \u222B\u222B\u222B4xy*dV over the region E that is bounded by z = 2x\u00B2 + 2y\u00B2 - 7 and z = 1. Hint: use cylindrical coordinates.",
+            "answer": "0"
         },   
 
         {
             "id": 6,
-            "question": "QUESTION 6",
-            "answer": "ANSWER 6"
+            "question": "Find the absolute minimum of f(x,y,z) = y\u00B2 - 10z subject to the constraint x\u00B2 + y\u00B2 + z\u00B2 = 36. Round your answer to the nearest integer. Hint: use Lagrange Multipliers",
+            "answer": "61"
         },
 
         {
             "id": 7,
-            "question": "QUESTION 7",
+            "question": "Find the point at which the absolute minimum occurs for the function f(x,y,z) = y\u00B2 - 10z subject to the constraint x\u00B2 + y\u00B2 + z\u00B2 = 36",
             "answer": "ANSWER 7"
-        },
-
-        {
-            "id": 8,
-            "question": "QUESTION 8",
-            "answer": "ANSWER 8"
-        },
-
-        {
-            "id": 9,
-            "question": "QUESTION 9",
-            "answer": "ANSWER 9"
-        },
-
-        {
-            "id": 10,
-            "question": "QUESTION 10",
-            "answer": "ANSWER 10"
         }
     ]
 }

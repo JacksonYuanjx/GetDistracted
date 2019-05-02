@@ -282,3 +282,7 @@ h2 strong {
   word-wrap: break-word;  /* ensures that text does not run off page and ruin layout */
   margin: 100px auto;
 }
+
+.question {
+  text-transform: none;
+}
