@@ -89,7 +89,7 @@
         {
             "id": 6,
             "question": "Find the interval for x where the function, f(x) = -2x\u00B3 + 6x\u00B2 - 10x + 5, is concave up. Write intervals like (0,0) for non-inclusive or [0,0] for inclusive and use 'inf' for infinity in your answer",
-            "answer": "(-inf, 1)"
+            "answer": "(-inf,1)"
         },
 
         {
@@ -144,8 +144,8 @@
 
         {
             "id": 7,
-            "question": "Find the point at which the absolute minimum occurs for the function f(x,y,z) = y\u00B2 - 10z subject to the constraint x\u00B2 + y\u00B2 + z\u00B2 = 36",
-            "answer": "ANSWER 7"
+            "question": "Find the point at which the absolute minimum occurs for the function f(x,y,z) = y\u00B2 - 10z subject to the constraint x\u00B2 + y\u00B2 + z\u00B2 = 36. Write the answer in this form, (0,0,0).",
+            "answer": "(0,0,6)"
         }
     ]
 }
