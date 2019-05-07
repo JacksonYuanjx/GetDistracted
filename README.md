@@ -2,8 +2,8 @@
 Google Chrome Productivity Extension
 
 # Want to try it?
-Demo Video: https://www.youtube.com/watch?v=YOKyseRUK44&t
-Install: Extension is pending review for publishing. Will be available soon!
+- Demo Video: https://www.youtube.com/watch?v=YOKyseRUK44&t
+- Install: https://chrome.google.com/webstore/detail/getdistracted/nlmpjkfldnlnehidpjkipcpieahigeml/related?authuser=1
 
 # Inspiration
 - to create a Chrome extension that prevents students from getting distracted by blocking websites
